@@ -31,9 +31,6 @@ This repository contains a set of microservices built with Spring Boot, Postgres
 3.Start all services using Docker Compose:
   docker-compose up
   
-API Documentation
-Swagger UI is available on each service at:
-http://localhost:{port}/swagger-ui.html
   
 
    
