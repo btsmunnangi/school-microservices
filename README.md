@@ -26,10 +26,10 @@ This repository contains a set of microservices built with Spring Boot, Postgres
    cd school-microservices
 
 2. Build Docker images for each microservice:
-./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=bts1976/{service-name}
+  ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=bts1976/{service-name}
 
-3.Start all services using Docker Compose:
-  docker-compose up
+3. Start all services using Docker Compose:
+   docker-compose up
   
   
 
