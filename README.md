@@ -13,7 +13,7 @@ This repository contains a set of microservices built with Spring Boot, Postgres
 
 ## Prerequisites
 
-- Java 11 or above  
+- Java 8 or above  
 - Maven  
 - Docker and Docker Compose  
 - Postgres (can run locally or via Docker)  
