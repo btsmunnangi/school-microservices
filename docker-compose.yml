@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: welcome1
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672" # RabbitMQ management UI
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+
+  configserver:
+    image: bts1976/configserver:latest
+    container_name: configserver
+    ports:
+      - "8888:8888"
+    depends_on:
+      - postgres
+      - rabbitmq
+
+  servicereg:
+    image: bts1976/servicereg:latest
+    container_name: servicereg
+    ports:
+      - "8761:8761"
+    depends_on:
+      - configserver
+
+  gateway:
+    image: bts1976/gateway:latest
+    container_name: gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - servicereg
+
+  student:
+    image: bts1976/student:latest
+    container_name: student
+    ports:
+      - "8082:8082"
+    depends_on:
+      - configserver
+      - servicereg
+      - rabbitmq
+      - postgres
+
+  review:
+    image: bts1976/review:latest
+    container_name: review
+    ports:
+      - "8084:8084"
+    depends_on:
+      - configserver
+      - servicereg
+      - rabbitmq
+      - postgres
+
+  school:
+    image: bts1976/school:latest
+    container_name: school
+    ports:
+      - "8081:8081"
+    depends_on:
+      - configserver
+      - servicereg
+      - rabbitmq
+      - postgres
+
+volumes:
+  pgdata:
